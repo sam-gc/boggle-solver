@@ -193,3 +193,32 @@ Hashlist *HS_to_list(Hashset *set)
 
     return retval;
 }
+
+void HS_list_sort(Hashlist *head, sort_function function)
+{
+    if(!head)
+        return;
+
+    if(!function)
+        function = strcmp;
+
+    int needsSorting = 1;
+
+    while(needsSorting)
+    {
+        needsSorting = 0;
+        node *n = head;
+        for(; n->next; n = n->next)
+        {
+            node *a = n;
+            node *b = n->next;
+            if(function(a->value, b->value) > 0)
+            {
+                needsSorting = 1;
+                char *tmp = a->value;
+                a->value = b->value;
+                b->value = tmp;
+            }
+        }
+    }
+}

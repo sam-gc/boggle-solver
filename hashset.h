@@ -1,6 +1,8 @@
 #ifndef HASHSET_H
 #define HASHSET_H
 
+typedef int(*sort_function)(const char *, const char *);
+
 typedef struct _node {
     char *value;
     struct _node *next;
@@ -19,5 +21,6 @@ int HS_count(Hashset *set);
 void HS_remove(Hashset *set, char *str);
 void HS_free(Hashset *set);
 Hashlist *HS_to_list(Hashset *set);
+void HS_list_sort(Hashlist *head, sort_function function);
 
 #endif
