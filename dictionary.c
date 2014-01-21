@@ -50,6 +50,8 @@ void dict_load()
     MUTUNLOCK(prfx_mut);
 
     FILE *file = fopen("words.txt", "r");
+    if(!file)
+        exit(-1);
     char *line = NULL;
     size_t len;
 

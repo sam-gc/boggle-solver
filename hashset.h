@@ -12,6 +12,7 @@ typedef struct {
     struct _node **buckets;
     int hash_size;
     char copies_str;
+    char no_strcmp;
 } Hashset;
 
 Hashset HS_create(int hash_size, char copies_str);

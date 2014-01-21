@@ -9,6 +9,7 @@
 int get_console_width()
 {
     struct winsize w;
+    w.ws_col = 0;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
     return w.ws_col;
@@ -38,7 +39,7 @@ void pb_update(ProgressBar *pb, int current)
 
     pb->numbars = numbars;
 
-    printf("\e[%dD" LIGHT_RED "[" LIGHT_BLUE, width);
+    printf("\e[%dD" LIGHT_RED "[" DEFAULT, width);
     int i;
     for(i = 0; i < numbars - 1; i++)
         printf("=");

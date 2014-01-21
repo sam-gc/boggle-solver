@@ -21,6 +21,7 @@ Hashset HS_create(int hash_size, char copies_str)
     Hashset set;
     set.hash_size = hash_size;
     set.copies_str = copies_str;
+    set.no_strcmp = 0;
     set.buckets = malloc(sizeof(node *) * hash_size);
 
     int i;
@@ -40,9 +41,18 @@ void HS_add(Hashset *set, char *str)
     {
         n = malloc(sizeof(node));
         set->buckets[hash] = n;
+        n->next = NULL;
     }
     else
     {
+        if(set->no_strcmp)
+        {
+            n = malloc(sizeof(node));
+            node *curr = set->buckets[hash];
+            n->next = curr;
+            set->buckets[hash] = n;
+        }
+
         node *last = NULL;
         for(n = set->buckets[hash]; n; n = n->next)
         {
@@ -55,6 +65,7 @@ void HS_add(Hashset *set, char *str)
         n = last;
         n->next = malloc(sizeof(node));
         n = n->next;
+        n->next = NULL;
     }
 
     char *value;
@@ -67,7 +78,6 @@ void HS_add(Hashset *set, char *str)
         value = str;
 
     n->value = value;
-    n->next = NULL;
 }
 
 int HS_contains(Hashset *set, char *str)
